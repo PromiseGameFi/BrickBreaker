@@ -227,31 +227,7 @@ export default function Board() {
     
     <div style={{ textAlign: "center" }}>
    
-      {/* Add background music component with volume */}
-      <BackgroundMusic isPlaying={musicPlaying} volume={volume} />
       
-      {/* Add music control button and volume slider */}
-      <div className="audio-controls">
-        <button 
-          className="music-control-btn"
-          onClick={() => setMusicPlaying(prev => !prev)}
-        >
-          {musicPlaying ? "🔊" : "🔇"}
-        </button>
-        
-        {/* Volume slider */}
-        <div className="volume-control">
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={volume}
-            onChange={handleVolumeChange}
-            className="volume-slider"
-          />
-        </div>
-      </div>
       
       <div className="top-right-button-container">
       <ConnectButton
@@ -323,6 +299,32 @@ export default function Board() {
       )}
       <div className="top-left-score-container">
       <HighScoreDisplay />
+      </div>
+
+      {/* Add background music component with volume */}
+      <BackgroundMusic isPlaying={musicPlaying} volume={volume} />
+      
+      {/* Add music control button and volume slider */}
+      <div className="audio-controls">
+        <button 
+          className="music-control-btn"
+          onClick={() => setMusicPlaying(prev => !prev)}
+        >
+          {musicPlaying ? "🔊" : "🔇"}
+        </button>
+        
+        {/* Volume slider */}
+        <div className="volume-control">
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={handleVolumeChange}
+            className="volume-slider"
+          />
+        </div>
       </div>
     </div>
     

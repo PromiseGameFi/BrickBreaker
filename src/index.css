@@ -1,62 +1,62 @@
 /* Audio Controls - Bottom Left Position */
 .audio-controls {
-    position: absolute;
-    bottom: 10px;
-    left: 10px; /* Changed from right to left */
-    display: flex;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
-    padding: 5px 10px;
-    z-index: 100;
-  }
-  
-  .music-control-btn {
-    background-color: transparent;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 8px;
-  }
-  
-  .volume-control {
-    width: 80px;
-  }
-  
-  .volume-slider {
-    width: 100%;
-    height: 5px;
-    -webkit-appearance: none;
-    appearance: none;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 5px;
-    outline: none;
-  }
-  
-  .volume-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background: white;
-    cursor: pointer;
-  }
-  
-  .volume-slider::-moz-range-thumb {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background: white;
-    cursor: pointer;
-  }
+  position: absolute;
+  bottom: 10px;
+  left: 10px; /* Positioned at left */
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  padding: 5px 10px;
+  z-index: 100;
+}
+
+.music-control-btn {
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+
+.volume-control {
+  width: 80px;
+}
+
+.volume-slider {
+  width: 100%;
+  height: 5px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
 .music-control-btn:hover {
   background-color: rgba(0, 0, 0, 0.7);
 }
