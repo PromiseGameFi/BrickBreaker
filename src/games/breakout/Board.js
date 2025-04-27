@@ -16,7 +16,7 @@ import { inAppWallet } from "thirdweb/wallets";
 import { defineChain } from "thirdweb";
 import ScoreUpdater from "../../services/scoreUpdater";
 import HighScoreDisplay from "../../components/HighScoreDisplay";
-
+import BackgroundMusic from "../../components/BackgroundMusic";
 
 
 
@@ -24,6 +24,34 @@ let bricks = [];
 let { ballObj, paddleProps, brickObj, player } = data;
 export default function Board() {
 
+    // Add state for music
+    const [musicPlaying, setMusicPlaying] = useState(false);
+    // Add state for volume
+    const [volume, setVolume] = useState(0.5); // Default volume at 50%
+
+    
+
+    // Add a function to handle volume change
+  const handleVolumeChange = (e) => {
+    setVolume(parseFloat(e.target.value));
+  };
+  
+
+      // Start music when game starts
+  useEffect(() => {
+    // Start music when component mounts
+    setMusicPlaying(true);
+    
+    return () => {
+      // Stop music when component unmounts
+      setMusicPlaying(false);
+    };
+  }, []);
+  
+  // Add a function to toggle music
+  const toggleMusic = () => {
+    setMusicPlaying(prev => !prev);
+  };
 
   //contract
   const { updateScore } = ScoreUpdater();
@@ -40,7 +68,35 @@ export default function Board() {
     name: player.name
   });
 
-   
+   // Add keyboard event listener for ESC key
+   useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        // Toggle between playing and paused
+        setGameState(prevState => 
+          prevState === "playing" ? "paused" : 
+          prevState === "paused" ? "playing" : 
+          prevState
+        );
+      }
+    };
+    
+    // Add event listener
+    window.addEventListener('keydown', handleKeyDown);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  // Set initial game state to playing when component mounts
+  useEffect(() => {
+    setGameState("playing");
+    return () => {
+      // Cleanup if needed
+    };
+  }, []);
 
   const updateStats = () => {
     setGameStats({
@@ -52,6 +108,12 @@ export default function Board() {
   };
 
   const render = () => {
+    // If game is paused, don't update anything
+    if (gameState === "paused") {
+      renderRef.current = requestAnimationFrame(render);
+      return;
+    }
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     paddleProps.y = canvas.height - 30;
@@ -164,6 +226,33 @@ export default function Board() {
     
     
     <div style={{ textAlign: "center" }}>
+   
+      {/* Add background music component with volume */}
+      <BackgroundMusic isPlaying={musicPlaying} volume={volume} />
+      
+      {/* Add music control button and volume slider */}
+      <div className="audio-controls">
+        <button 
+          className="music-control-btn"
+          onClick={() => setMusicPlaying(prev => !prev)}
+        >
+          {musicPlaying ? "🔊" : "🔇"}
+        </button>
+        
+        {/* Volume slider */}
+        <div className="volume-control">
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={handleVolumeChange}
+            className="volume-slider"
+          />
+        </div>
+      </div>
+      
       <div className="top-right-button-container">
       <ConnectButton
               client={client}

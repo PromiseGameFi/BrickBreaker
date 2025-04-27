@@ -58,7 +58,7 @@ const HighScoreDisplay = () => {
     fetchHighScore();
     
     // Set up polling interval (every 5 seconds)
-    intervalId = setInterval(fetchHighScore, 5000);
+    intervalId = setInterval(fetchHighScore, 1000);
     
     // Clean up interval on component unmount
     return () => {
