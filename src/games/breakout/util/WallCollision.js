@@ -5,7 +5,7 @@ export default function WallCollision(
   paddleProps,
   setLives
 ) {
-  const baseSpeed = 5; // Adjust this to your preferred base speed
+  const baseSpeed = 3; // Adjust this to your preferred base speed
   
   if (ballObj.y + ballObj.rad > canvas.height) {
     player.lives--;

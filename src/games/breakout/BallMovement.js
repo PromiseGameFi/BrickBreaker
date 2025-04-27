@@ -3,7 +3,7 @@ export function BallMovement(ctx, ballObj) {
   data.draw(ctx);
 
   // Add a maximum speed cap
-  const maxSpeed = 6; // Adjust this value to your preference
+  const maxSpeed = 4; // Adjust this value to your preference
   
   // Cap the speed if it exceeds the maximum
   if (Math.abs(ballObj.dx) > maxSpeed) {
