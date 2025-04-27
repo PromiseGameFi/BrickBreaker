@@ -1,0 +1,385 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap');
+
+:root {
+  --primary-glow: #0ff;
+  --secondary-glow: #f0f;
+  --background-dark: #000924;
+  --text-glow: 0 0 10px var(--primary-glow);
+  --border-glow: 0 0 15px var(--secondary-glow);
+}
+
+body {
+  margin: 0;
+  background: var(--background-dark);
+  background-image: 
+    linear-gradient(45deg, rgba(0,0,40,0.7) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(0,0,40,0.7) 25%, transparent 25%);
+  background-size: 60px 60px;
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+  overflow: hidden;
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.gameHeader {
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  text-shadow: var(--text-glow);
+  margin-bottom: 2rem;
+  animation: pulse 2s infinite;
+}
+
+#canvas {
+  background: rgba(0, 9, 36, 0.8);
+  border: 2px solid var(--primary-glow);
+  box-shadow: var(--border-glow);
+  border-radius: 4px;
+  backdrop-filter: blur(5px);
+}
+/* Connect Wallet Modal */
+.connect-wallet {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 9, 36, 0.95);
+  padding: 2rem;
+  border: 2px solid var(--primary-glow);
+  box-shadow: var(--border-glow);
+  border-radius: 8px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+}
+
+/* ... existing code ... */
+
+/* Button container for top right corner */
+.top-right-button-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.top-right-button {
+  padding: 10px 15px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* High score display button */
+
+/* High Score Display Styles */
+.top-left-score-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+}
+
+
+
+.high-score-container {
+
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-top: 0;
+  color: white;
+  text-align: center;
+  min-width: 150px;
+  
+}
+.high-score-container h3 {
+margin: 0 0 5px 0;
+font-size: 16px;
+}
+
+.score-display {
+font-size: 24px;
+font-weight: bold;
+color: #ddd8c5;
+}
+
+.error-message {
+color: #ff6b6b;
+font-size: 14px;
+}
+
+.top-right-button:hover {
+  background-color: #ff4757;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+/* Connect Screen */
+.connect-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  background-color: #1e1e1e; /* Optional: dark game-y background */
+}
+
+.connect-container {
+  text-align: center;
+  padding: 2rem;
+  background-color: #2c2c2c; /* Optional: card-style box */
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+
+/* Game Over Modal */
+.game-over {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 9, 36, 0.95);
+  padding: 2rem;
+  border: 2px solid var(--primary-glow);
+  box-shadow: var(--border-glow);
+  border-radius: 8px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+}
+
+.retry-btn {
+  background: transparent;
+  color: white;
+  border: 2px solid var(--primary-glow);
+  padding: 1rem 2rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+
+.retry-btn:hover {
+  background: var(--primary-glow);
+  color: var(--background-dark);
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .gameHeader {
+    font-size: 1.8rem;
+  }
+  
+  #canvas {
+    width: 95vw !important;
+    height: auto !important;
+  }
+}
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#canvas {
+  background-color: rgba(19, 73, 89, 0.7);
+}
+
+.gameHeader {
+  font-family: "Sedgwick Ave", cursive;
+  color: white;
+  font-size: 40px;
+}
+
+.game-stats {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 40px;
+  padding: 15px 30px;
+  background: rgba(0, 9, 36, 0.8);
+  border: 2px solid var(--primary-glow);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  z-index: 100;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 100px;
+}
+
+.stat-label {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  color: var(--primary-glow);
+  text-shadow: 0 0 5px var(--primary-glow);
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 10px var(--primary-glow);
+}
+
+.lives-container {
+  display: flex;
+  gap: 8px;
+}
+
+.life-icon {
+  color: #ff4757;
+  font-size: 1.5rem;
+  text-shadow: 0 0 8px #ff4757;
+  animation: pulse 2s infinite;
+}
+
+.player-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  color: white;
+  text-shadow: 0 0 8px var(--primary-glow);
+  margin-top: 5px;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.game-over {
+  background: rgba(0, 9, 36, 0.95);
+  padding: 3rem;
+  border: 3px solid var(--primary-glow);
+  box-shadow: 0 0 30px var(--primary-glow);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .gameHeader {
+    font-size: 1.8rem;
+  }
+  
+  #canvas {
+    width: 95vw !important;
+    height: auto !important;
+  }
+}
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#canvas {
+  background-color: rgba(19, 73, 89, 0.7);
+}
+
+.gameHeader {
+  font-family: "Sedgwick Ave", cursive;
+  color: white;
+  font-size: 40px;
+}
