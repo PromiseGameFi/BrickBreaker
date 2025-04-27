@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const BackgroundMusic = ({ isPlaying = true, volume = 0.5 }) => {
+const BackgroundMusic = ({ isPlaying = true, volume = 0.4 }) => {
   const audioRef = useRef(null);
 
   // Handle initial play and user interaction
