@@ -70,6 +70,7 @@ const BackgroundMusic = ({ isPlaying = true, volume = 0.5 }) => {
       src="/music/game-music.mp3" 
       loop
       preload="auto"
+      muted={volume === 0}
     />
   );
 };
