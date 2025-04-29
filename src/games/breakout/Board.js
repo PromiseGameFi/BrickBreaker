@@ -109,15 +109,21 @@ export default function Board() {
 
   const render = () => {
     // If game is paused, don't update anything
-    if (gameState === "paused") {
-      renderRef.current = requestAnimationFrame(render);
-      return;
-    }
+    // If game is paused, don't continue the animation loop
+  if (gameState === "paused") {
+    return;
+  }
+
+ 
+
+ 
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     paddleProps.y = canvas.height - 30;
 
+    renderRef.current = requestAnimationFrame(render);
+    
     // Assign Bricks
     let newBrickSet = Brick(player.level, bricks, canvas, brickObj);
 
@@ -182,14 +188,19 @@ export default function Board() {
     renderRef.current = requestAnimationFrame(render);
   };
 
-  useEffect(() => {
+  // Make the render function respond to gameState changes
+useEffect(() => {
+  // Only start or continue rendering if the game is playing
+  if (gameState === "playing") {
     render();
-    return () => {
-      if (renderRef.current) {
-        cancelAnimationFrame(renderRef.current);
-      }
-    };
-  }, []);
+  }
+  
+  return () => {
+    if (renderRef.current) {
+      cancelAnimationFrame(renderRef.current);
+    }
+  };
+}, [gameState]); // Add gameState as a dependency
 
   const handleMouseMove = (event) => {
     paddleProps.x =
@@ -227,7 +238,31 @@ export default function Board() {
     
     <div style={{ textAlign: "center" }}>
    
-      
+       {/* Add pause overlay */}
+  {gameState === "paused" && (
+    <div className="pause-overlay">
+      <div className="pause-content">
+        <h2>Game Paused</h2>
+        <p>Press ESC to resume</p>
+        <button 
+          className="resume-btn"
+          onClick={() => setGameState("playing")}
+        >
+          Resume Game
+        </button>
+      </div>
+    </div>
+  )}
+  
+  {/* Add a visible pause button */}
+  <button 
+    className="pause-button"
+    onClick={() => setGameState(prevState => 
+      prevState === "playing" ? "paused" : "playing"
+    )}
+  >
+    {gameState === "playing" ? "⏸️ Pause" : "▶️ Resume"}
+  </button>
       
       <div className="top-right-button-container">
       <ConnectButton
