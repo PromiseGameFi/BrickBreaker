@@ -17,6 +17,8 @@ import { defineChain } from "thirdweb";
 import ScoreUpdater from "../../services/scoreUpdater";
 import HighScoreDisplay from "../../components/HighScoreDisplay";
 import BackgroundMusic from "../../components/BackgroundMusic";
+import Leaderboard from '../../components/Leaderboard';
+import LeaderboardButton from '../../components/LeaderboardButton';
 
 
 
@@ -28,6 +30,9 @@ export default function Board() {
     const [musicPlaying, setMusicPlaying] = useState(false);
     // Add state for volume
     const [volume, setVolume] = useState(0.5); // Default volume at 50%
+
+    // Add state to store original ball speed
+    const [originalBallSpeed, setOriginalBallSpeed] = useState(null);
 
     
 
@@ -68,27 +73,36 @@ export default function Board() {
     name: player.name
   });
 
-   // Add keyboard event listener for ESC key
-   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        // Toggle between playing and paused
-        setGameState(prevState => 
-          prevState === "playing" ? "paused" : 
-          prevState === "paused" ? "playing" : 
-          prevState
-        );
+ // Modify the ESC key handler to control ball speed
+useEffect(() => {
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      if (gameState === "playing") {
+        // Store original speeds before pausing
+        setOriginalBallSpeed({ dx: ballObj.dx, dy: ballObj.dy });
+        // Set ball speed to zero
+        ballObj.dx = 0;
+        ballObj.dy = 0;
+        setGameState("paused");
+      } else if (gameState === "paused") {
+        // Restore original speeds
+        if (originalBallSpeed) {
+          ballObj.dx = originalBallSpeed.dx;
+          ballObj.dy = originalBallSpeed.dy;
+        }
+        setGameState("playing");
       }
-    };
-    
-    // Add event listener
-    window.addEventListener('keydown', handleKeyDown);
-    
-    // Clean up
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
+    }
+  };
+  
+  // Add event listener
+  window.addEventListener('keydown', handleKeyDown);
+  
+  // Clean up
+  return () => {
+    window.removeEventListener('keydown', handleKeyDown);
+  };
+}, [gameState, originalBallSpeed]);
 
   // Set initial game state to playing when component mounts
   useEffect(() => {
@@ -108,11 +122,7 @@ export default function Board() {
   };
 
   const render = () => {
-    // If game is paused, don't update anything
-    if (gameState === "paused") {
-      renderRef.current = requestAnimationFrame(render);
-      return;
-    }
+    
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -179,6 +189,21 @@ export default function Board() {
       updateStats();
     }
 
+
+// Draw pause overlay if game is paused
+  if (gameState === "paused") {
+    // Semi-transparent overlay
+    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Pause text
+    ctx.fillStyle = "white";
+    ctx.font = "30px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("GAME PAUSED", canvas.width / 2, canvas.height / 2 - 30);
+    ctx.font = "20px Arial";
+    ctx.fillText("Press ESC to resume", canvas.width / 2, canvas.height / 2 + 10);
+  }
     renderRef.current = requestAnimationFrame(render);
   };
 
@@ -226,7 +251,7 @@ export default function Board() {
     
     
     <div style={{ textAlign: "center" }}>
-   
+   <LeaderboardButton />
       
       
       <div className="top-right-button-container">
@@ -298,7 +323,30 @@ export default function Board() {
         </div>
       )}
       <div className="top-left-score-container">
-      <HighScoreDisplay />
+    <HighScoreDisplay />
+
+    {/* Add pause overlay for mobile users */}
+    {gameState === "paused" && (
+      <div className="pause-overlay">
+        <div className="pause-content">
+          <h2>Game Paused</h2>
+          <p>Press ESC to resume</p>
+          <button 
+            className="resume-btn"
+            onClick={() => {
+              if (originalBallSpeed) {
+                ballObj.dx = originalBallSpeed.dx;
+                ballObj.dy = originalBallSpeed.dy;
+              }
+              setGameState("playing");
+            }}
+          >
+            Resume Game
+          </button>
+        </div>
+      </div>
+    )}
+    
       </div>
 
       {/* Add background music component with volume */}

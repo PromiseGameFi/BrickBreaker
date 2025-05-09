@@ -14,7 +14,7 @@ const HighScoreDisplay = () => {
   const contract = {
     client,
     chain: defineChain(50312),
-    address: "0x348137454b78C6eA082D7bb8aA8bFf6fFF428924",
+    address: "0x8Ff06d6811A171aFdf641d1De9fEB9Aa83ACf8BD",
   };
 
   useEffect(() => {

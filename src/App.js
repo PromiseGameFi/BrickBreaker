@@ -5,6 +5,7 @@ import Breakout from "./games/breakout/index";
 import { ConnectButton, useActiveWalletConnectionStatus } from "thirdweb/react";
 import { client } from "./client";
 import Wapp from "./Wapp";
+import Pause from "./pause/pause";
 
 // Wrapper to use hooks inside router
 function AppRoutes() {

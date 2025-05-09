@@ -3,8 +3,7 @@ import abi from './abi.json';
 
 
 // Contract address from your existing code
-const CONTRACT_ADDRESS = "0x348137454b78C6eA082D7bb8aA8bFf6fFF428924";
-
+const CONTRACT_ADDRESS ="0x8Ff06d6811A171aFdf641d1De9fEB9Aa83ACf8BD";
 // Create a provider - you can use any provider that works with your network
 // For ethers.js v6, we need to use JsonRpcProvider directly
 const provider = new ethers.JsonRpcProvider("https://dream-rpc.somnia.network");
@@ -13,7 +12,6 @@ const provider = new ethers.JsonRpcProvider("https://dream-rpc.somnia.network");
 export const updateHighScoreWithEthers = async (playerAddress, score) => {
   try {
     // Get admin private key from environment variable
-    //const adminPrivateKey = process.env.PRIVATE_KEY || "c07e07469ba61840ee5d5846a622afe8353e4ca15a48b16ecb7dfc30a25afda3";
     const adminPrivateKey = process.env.REACT_APP_PRIVATE_KEY;
     
     if (!adminPrivateKey) {
