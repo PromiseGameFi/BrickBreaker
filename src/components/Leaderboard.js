@@ -144,5 +144,4 @@ const Leaderboard = ({ isVisible, onClose }) => {
     </div>
   );
 };
-
 export default Leaderboard;
