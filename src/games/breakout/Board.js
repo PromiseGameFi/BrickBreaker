@@ -12,7 +12,7 @@ import ResetBall from "./util/ResetBall";
 //for wallets
 import { ConnectButton, useActiveAccount } from "thirdweb/react";
 import { client } from "../../client";
-import { inAppWallet } from "thirdweb/wallets";
+import { inAppWallet, createWallet } from "thirdweb/wallets";
 import { defineChain } from "thirdweb";
 import ScoreUpdater from "../../services/scoreUpdater";
 import HighScoreDisplay from "../../components/HighScoreDisplay";
@@ -253,7 +253,12 @@ if (gameState === "paused" || gameState === "leaderboard-open") {
     inAppWallet({
       auth: { options: ["email", "passkey", "google"] },
       chains: [defineChain(50312)],
-    }),
+    }), 
+
+    createWallet("io.metamask"),
+    createWallet("com.coinbase.wallet"),
+    createWallet("me.rainbow"),
+    
   ];
 
 
@@ -287,7 +292,6 @@ if (gameState === "paused" || gameState === "leaderboard-open") {
       <div className="top-right-button-container">
       <ConnectButton
               client={client}
-              wallets={wallets}
               connectButton={{
                 label: "Sign In",
                 style: {

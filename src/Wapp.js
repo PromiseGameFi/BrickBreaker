@@ -22,7 +22,6 @@ function Wapp() {
             <p>Connect your wallet to start playing</p>
             <ConnectButton
               client={client}
-              wallets={wallets}
               connectButton={{
                 label: "Sign In",
                 style: {
@@ -31,10 +30,7 @@ function Wapp() {
                 }
               }}
               chain={defineChain(50312)}
-              accountAbstraction={{
-                chain: defineChain(50312),
-                sponsorGas: true,
-              }}
+
               
               appMetadata={{
                 name: "Brick Breaker Game",
