@@ -74,7 +74,7 @@ export default function Board() {
   });
 
  // Modify the ESC key handler to control ball speed
-useEffect(() => {
+ useEffect(() => {
   const handleKeyDown = (event) => {
     if (event.key === 'Escape') {
       if (gameState === "playing") {
@@ -84,7 +84,7 @@ useEffect(() => {
         ballObj.dx = 0;
         ballObj.dy = 0;
         setGameState("paused");
-      } else if (gameState === "paused") {
+      } else if (gameState === "paused" || gameState === "leaderboard-open") {
         // Restore original speeds
         if (originalBallSpeed) {
           ballObj.dx = originalBallSpeed.dx;
@@ -94,6 +94,7 @@ useEffect(() => {
       }
     }
   };
+
   
   // Add event listener
   window.addEventListener('keydown', handleKeyDown);
@@ -191,7 +192,12 @@ useEffect(() => {
 
 
 // Draw pause overlay if game is paused
+if (gameState === "paused" || gameState === "leaderboard-open") {
+  // Only draw pause overlay if actually paused (not when leaderboard is open)
   if (gameState === "paused") {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    
     // Semi-transparent overlay
     ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -204,6 +210,10 @@ useEffect(() => {
     ctx.font = "20px Arial";
     ctx.fillText("Press ESC to resume", canvas.width / 2, canvas.height / 2 + 10);
   }
+  
+  renderRef.current = requestAnimationFrame(render);
+  return;
+}
     renderRef.current = requestAnimationFrame(render);
   };
 
@@ -251,8 +261,28 @@ useEffect(() => {
     
     
     <div style={{ textAlign: "center" }}>
-   <LeaderboardButton />
-      
+  
+      {/* Add pause overlay for mobile users */}
+    {gameState === "paused" && (
+      <div className="pause-overlay">
+        <div className="pause-content">
+          <h2>Game Paused</h2>
+          <p>Press ESC to resume</p>
+          <button 
+            className="resume-btn"
+            onClick={() => {
+              if (originalBallSpeed) {
+                ballObj.dx = originalBallSpeed.dx;
+                ballObj.dy = originalBallSpeed.dy;
+              }
+              setGameState("playing");
+            }}
+          >
+            Resume Game
+          </button>
+        </div>
+      </div>
+    )}
       
       <div className="top-right-button-container">
       <ConnectButton
@@ -266,10 +296,6 @@ useEffect(() => {
                 }
               }}
               chain={defineChain(50312)}
-              accountAbstraction={{
-                chain: defineChain(50312),
-                sponsorGas: true,
-              }}
               
               appMetadata={{
                 name: "Brick Breaker Game",
@@ -324,29 +350,13 @@ useEffect(() => {
       )}
       <div className="top-left-score-container">
     <HighScoreDisplay />
-
-    {/* Add pause overlay for mobile users */}
-    {gameState === "paused" && (
-      <div className="pause-overlay">
-        <div className="pause-content">
-          <h2>Game Paused</h2>
-          <p>Press ESC to resume</p>
-          <button 
-            className="resume-btn"
-            onClick={() => {
-              if (originalBallSpeed) {
-                ballObj.dx = originalBallSpeed.dx;
-                ballObj.dy = originalBallSpeed.dy;
-              }
-              setGameState("playing");
-            }}
-          >
-            Resume Game
-          </button>
-        </div>
-      </div>
-    )}
-    
+    <LeaderboardButton 
+      setGameState={setGameState}
+      gameState={gameState}
+      originalBallSpeed={originalBallSpeed}
+      setOriginalBallSpeed={setOriginalBallSpeed}
+      ballObj={ballObj}
+    />
       </div>
 
       {/* Add background music component with volume */}

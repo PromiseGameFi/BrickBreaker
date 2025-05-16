@@ -70,7 +70,7 @@
 
 /* Pause Overlay */
 .pause-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -79,7 +79,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 200;
+  z-index: 1000;
 }
 
 .pause-content {
@@ -89,6 +89,7 @@
   text-align: center;
   color: white;
   border: 2px solid #ff6b6b;
+  pointer-events: auto;
 }
 
 .pause-content h2 {
@@ -150,6 +151,7 @@
   color: white;
   border: 2px solid #ff6b6b;
   z-index: 1001;
+  pointer-events: auto;
 }
 
 .leaderboard-title {
